@@ -58,19 +58,19 @@
   /* base orange */
   --primary-foreground: oklch(100% 0.00011 271.152);
 
-  --secondary: oklch(85.092% 0.04783 57.682);
-  --secondary-foreground: oklch(0.3 0.05 48);
+  --secondary: oklch(50.029% 0.27709 265.15);
+  --secondary-foreground: oklch(100% 0.00011 271.152);
 
-  --muted: oklch(0.95 0.05 48);
-  --muted-foreground: oklch(0.55 0.07 48);
+  --muted: oklch(85.142% 0.0001 271.152);
+  --muted-foreground: oklch(78.577% 0.00009 271.152);
 
   --accent: oklch(0.7 0.19 48);
   --accent-foreground: oklch(100% 0.00011 271.152);
 
   --destructive: oklch(0.65 0.2 27.3);
 
-  --border: oklch(0.9 0.02 48);
-  --input: oklch(0.9 0.02 48);
+  --border: oklch(100% 0.00011 271.152);
+  --input: oklch(93.643% 0.00666 97.461);
   --ring: oklch(0.7 0.19 48);
 
   /* === Charts: orange spectrum === */

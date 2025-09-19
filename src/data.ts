@@ -33,6 +33,6 @@ export const processes: IProcesses[] = [
     name: 'Документы',
     createdAt: new Date(),
     link: 'f/37bff4',
-    status: 'published',
+    status: 'draft',
   },
 ];
