@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -44,71 +44,71 @@
   --container_mw: 960px;
   --radius: 0.625rem;
 
-  --background: oklch(0.97 0.00 0);
-  --foreground: oklch(0.15 0.02 48);
+  --background: oklch(0.97 0 0);
+  --foreground: oklch(0.2 0 0);
 
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0.02 48);
+  --card-foreground: oklch(0.2 0 0);
 
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0.02 48);
+  --popover-foreground: oklch(0.2 0 0);
 
   /* === Orange palette === */
-  --primary: oklch(0.70 0.19 48);
+  --primary: oklch(0.7 0.19 48);
   /* base orange */
   --primary-foreground: oklch(100% 0.00011 271.152);
 
   --secondary: oklch(85.092% 0.04783 57.682);
-  --secondary-foreground: oklch(0.30 0.05 48);
+  --secondary-foreground: oklch(0.3 0.05 48);
 
   --muted: oklch(0.95 0.05 48);
   --muted-foreground: oklch(0.55 0.07 48);
 
-  --accent: oklch(0.70 0.19 48);
+  --accent: oklch(0.7 0.19 48);
   --accent-foreground: oklch(100% 0.00011 271.152);
 
-  --destructive: oklch(0.65 0.20 27.3);
+  --destructive: oklch(0.65 0.2 27.3);
 
-  --border: oklch(0.90 0.02 48);
-  --input: oklch(0.90 0.02 48);
-  --ring: oklch(0.70 0.19 48);
+  --border: oklch(0.9 0.02 48);
+  --input: oklch(0.9 0.02 48);
+  --ring: oklch(0.7 0.19 48);
 
   /* === Charts: orange spectrum === */
-  --chart-1: oklch(0.72 0.20 48);
+  --chart-1: oklch(0.72 0.2 48);
   --chart-2: oklch(0.65 0.18 48);
   --chart-3: oklch(0.58 0.16 48);
-  --chart-4: oklch(0.80 0.22 48);
+  --chart-4: oklch(0.8 0.22 48);
   --chart-5: oklch(0.88 0.24 48);
 
   /* === Sidebar === */
   --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.15 0.02 48);
+  --sidebar-foreground: oklch(0.2 0 0);
 
-  --sidebar-primary: oklch(0.70 0.19 48);
+  --sidebar-primary: oklch(0.7 0.19 48);
   --sidebar-primary-foreground: oklch(0.985 0.02 48);
 
-  --sidebar-accent: oklch(0.90 0.10 48);
-  --sidebar-accent-foreground: oklch(0.20 0.04 48);
+  --sidebar-accent: oklch(0.9 0.1 48);
+  --sidebar-accent-foreground: oklch(0.2 0 0);
 
-  --sidebar-border: oklch(0.90 0.02 48);
-  --sidebar-ring: oklch(0.70 0.19 48);
+  --sidebar-border: oklch(0.9 0.02 48);
+  --sidebar-ring: oklch(0.7 0.19 48);
 }
 
 .dark {
-  --background: oklch(0.15 0.02 48);
-  --foreground: oklch(0.985 0.02 48);
+  --background: oklch(0.2 0 0);
+  --foreground: oklch(0.97 0 0);
 
-  --card: oklch(0.20 0.04 48);
+  --card: oklch(0.2 0.04 48);
   --card-foreground: oklch(0.985 0.02 48);
 
-  --popover: oklch(0.20 0.04 48);
+  --popover: oklch(0.2 0.04 48);
   --popover-foreground: oklch(0.985 0.02 48);
 
   /* === Orange palette dark === */
   --primary: oklch(0.88 0.24 48);
-  --primary-foreground: oklch(0.20 0.04 48);
+  --primary-foreground: oklch(0.2 0.04 48);
 
-  --secondary: oklch(0.30 0.05 48);
+  --secondary: oklch(0.3 0.05 48);
   --secondary-foreground: oklch(0.985 0.02 48);
 
   --muted: oklch(0.25 0.04 48);
@@ -117,31 +117,31 @@
   --accent: oklch(0.35 0.06 48);
   --accent-foreground: oklch(0.985 0.02 48);
 
-  --destructive: oklch(0.60 0.22 27.3);
+  --destructive: oklch(0.6 0.22 27.3);
 
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.70 0.19 48);
+  --ring: oklch(0.7 0.19 48);
 
   /* === Charts dark === */
   --chart-1: oklch(0.75 0.22 48);
-  --chart-2: oklch(0.65 0.20 48);
+  --chart-2: oklch(0.65 0.2 48);
   --chart-3: oklch(0.55 0.16 48);
-  --chart-4: oklch(0.80 0.23 48);
-  --chart-5: oklch(0.90 0.24 48);
+  --chart-4: oklch(0.8 0.23 48);
+  --chart-5: oklch(0.9 0.24 48);
 
   /* === Sidebar dark === */
-  --sidebar: oklch(0.20 0.04 48);
+  --sidebar: oklch(0.2 0.04 48);
   --sidebar-foreground: oklch(0.985 0.02 48);
 
   --sidebar-primary: oklch(0.75 0.22 48);
   --sidebar-primary-foreground: oklch(0.985 0.02 48);
 
-  --sidebar-accent: oklch(0.30 0.05 48);
+  --sidebar-accent: oklch(0.3 0.05 48);
   --sidebar-accent-foreground: oklch(0.985 0.02 48);
 
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.70 0.19 48);
+  --sidebar-ring: oklch(0.7 0.19 48);
 }
 
 @layer base {
