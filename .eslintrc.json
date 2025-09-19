@@ -10,7 +10,7 @@
     "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["react", "react-hooks", "jsx-a11y", "prettier"],
+  "plugins": ["react", "react-hooks", "jsx-a11y", "prettier","simple-import-sort"],
   "rules": {
     "prettier/prettier": ["error"]
   },
