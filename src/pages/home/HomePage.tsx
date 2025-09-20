@@ -1,9 +1,6 @@
 import { BadgeCheckIcon } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -15,23 +12,12 @@ import {
 import { processes } from '@/data';
 import { cn } from '@/lib/utils';
 
+import { CreateProcess } from './_components/createProcess/CreateProcess';
+
 const HomePage = () => {
   return (
     <div>
-      <Card className="w-full mb-4">
-        <CardHeader>
-          <CardTitle className="text-[20px] text-neutral-700 font-bold">
-            Создать процесс
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex w-full items-center gap-2">
-            <Input type="text" placeholder="Название процесса" />
-            <Button variant="outline">Создать</Button>
-          </div>
-        </CardContent>
-      </Card>
-
+      <CreateProcess />
       <div className="overflow-hidden rounded-md border">
         <Table className="bg-white">
           <TableHeader>
@@ -45,13 +31,15 @@ const HomePage = () => {
           <TableBody>
             {processes.length ? (
               processes.map((row, i) => (
-                <TableRow key={i}>
+                <TableRow role="button" className="cursor-pointer" key={i}>
                   <TableCell>{row.name}</TableCell>
-                  <TableCell>{window.origin + row.link}</TableCell>
                   <TableCell>
-                    {row.createdAt.toLocaleTimeString() +
-                      ' ' +
-                      row.createdAt.toLocaleDateString()}
+                    {row.link ? window.origin + row.link : ''}
+                  </TableCell>
+                  <TableCell>
+                    {row.createdAt.toLocaleDateString() +
+                      '/' +
+                      row.createdAt.toLocaleTimeString()}
                   </TableCell>
                   <TableCell>
                     <Badge

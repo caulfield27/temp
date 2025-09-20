@@ -1,6 +1,14 @@
 import { createBrowserRouter } from 'react-router';
+
+import {
+  LazyApplications,
+  LazyHomePage,
+  LazyLogin,
+  LazyOrganization,
+  LazyProcess,
+} from '@/app/lazy/lazy';
+
 import Layout from '../../layout/Layout';
-import { LazyApplications, LazyHomePage, LazyLogin } from '@/app/lazy/lazy';
 
 export const routes = createBrowserRouter([
   {
@@ -14,6 +22,14 @@ export const routes = createBrowserRouter([
       {
         path: 'applications',
         element: <LazyApplications />,
+      },
+      {
+        path: 'org',
+        element: <LazyOrganization />,
+      },
+      {
+        path: 'process/:name',
+        element: <LazyProcess />,
       },
     ],
   },

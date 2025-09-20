@@ -1,7 +1,7 @@
 export interface IProcesses {
   name: string;
   createdAt: Date;
-  link: string;
+  link: string | null;
   status: 'published' | 'draft';
 }
 export const processes: IProcesses[] = [
@@ -32,7 +32,7 @@ export const processes: IProcesses[] = [
   {
     name: 'Документы',
     createdAt: new Date(),
-    link: 'f/37bff4',
+    link: null,
     status: 'draft',
   },
 ];
