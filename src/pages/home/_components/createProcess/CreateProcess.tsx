@@ -31,7 +31,7 @@ export const CreateProcess = () => {
             placeholder="Название процесса"
           />
           <Button
-            onClick={() => navigate(`process/${process}`)}
+            onClick={() => navigate(`process/${processName}`)}
             variant="outline"
             disabled={!processName}
           >
