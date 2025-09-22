@@ -3,16 +3,16 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import z from 'zod';
 
-import { Button } from '@/components/ui/button';
 import {
+  Button,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+  Input,
+} from '@/ui';
 
 import { FormSchema } from './LoginValidation';
 

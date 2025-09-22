@@ -1,7 +1,9 @@
-import { Header } from '@/components/ui/header';
-import { Loader } from '@/components/ui/loader';
 import { Suspense } from 'react';
 import { Outlet } from 'react-router';
+
+import { Loader } from '@/ui/loader/Loader';
+
+import { Header } from './_components';
 
 const Layout = () => {
   return (

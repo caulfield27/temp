@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import { Button } from '@/ui/button/Button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/ui/card/Card';
+import { Input } from '@/ui/input/Input';
 
 export const CreateProcess = () => {
   const [processName, setProcessName] = useState<string>('');

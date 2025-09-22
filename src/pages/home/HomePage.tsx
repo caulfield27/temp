@@ -1,21 +1,21 @@
 import { BadgeCheckIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
-import { Badge } from '@/components/ui/badge';
+import { processes } from '@/data';
+import { cn } from '@/lib/utils';
 import {
+  Badge,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { Title } from '@/components/ui/title';
-import { Title2 } from '@/components/ui/title2';
-import { processes } from '@/data';
-import { cn } from '@/lib/utils';
+  Title,
+  Title2,
+} from '@/ui';
 
-import { CreateProcess } from './_components/createProcess/CreateProcess';
+import { CreateProcess } from './_components';
 
 const HomePage = () => {
   const navigate = useNavigate();

@@ -2,16 +2,16 @@ import { LogOut } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router';
 
 import { cn } from '@/lib/utils';
-
-import { Avatar, AvatarFallback } from './avatar';
 import {
+  Avatar,
+  AvatarFallback,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from './dropdown-menu';
+} from '@/ui';
 
 export const Header = () => {
   const navigate = useNavigate();
