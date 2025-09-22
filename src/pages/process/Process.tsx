@@ -1,24 +1,39 @@
-import { GripVertical } from 'lucide-react';
+import {
+  type DragEndEvent,
+  type DragMoveEvent,
+  type DragOverEvent,
+  type DragStartEvent,
+} from '@dnd-kit/core';
+import { Info } from 'lucide-react';
 import { useState } from 'react';
 import { useParams } from 'react-router';
 
-import { actions } from '@/data';
+import { actionIcon } from '@/constants';
 import { cn } from '@/lib/utils';
-import { Button, Label, Title, Title2 } from '@/ui';
+import { useProcessStore } from '@/store';
+import { Badge, Button, Label, Title, Title2 } from '@/ui';
 
-import type { IPage } from './ProcessTypes';
+import { DNDContextWrapper, Draggable } from './_components';
+import { ElementCard } from './_components/elementCard/ElementCard';
+import { actions } from './ProcessContants';
+import type { IAction } from './ProcessTypes';
 
 const Process = () => {
+  // zustand store states
+  const {
+    currentPage,
+    pages,
+    setCurrentPage,
+    setPages,
+    removePage,
+    updatePageActions,
+    swapActions,
+  } = useProcessStore();
+
   // locale states
   const { name } = useParams();
-  const [pages, setPages] = useState<IPage[]>([
-    {
-      name: 'Шаг 1',
-      actions: [],
-      id: Date.now(),
-    },
-  ]);
-  const [currentPage, setCurrentPage] = useState<IPage>(pages[0]);
+  const [draggedItem, setDraggedItem] = useState<IAction | null>(null);
+  const [overItem, setOverItem] = useState<IAction | null>(null);
 
   // event handlers
   function handleAddPage() {
@@ -26,20 +41,58 @@ const Process = () => {
       name: 'Новая страница',
       actions: [],
       id: Date.now(),
+      isPublished: false,
     };
-    setPages((prev) => [...prev, page]);
+    setPages(page);
     setCurrentPage(page);
   }
 
-  function handleRemovePage() {
-    const updatedPages = pages.filter((page) => page.id !== currentPage?.id);
-    setPages(updatedPages);
-    setCurrentPage(updatedPages[0]);
+  function handleDragStart(event: DragStartEvent) {
+    const { id } = event.active;
+    const dragged = currentPage.actions.find((action) => action.id === id);
+    setDraggedItem(dragged ?? null);
+  }
+
+  function handleDragEnd(event: DragEndEvent) {
+    const id = event.over?.id;
+    if (id) {
+      swapActions(draggedItem?.id ?? 0, id as number);
+    }
+
+    setDraggedItem(null);
+    setOverItem(null);
+  }
+
+  function handleDragOver(event: DragOverEvent) {
+    if (draggedItem?.id === event.over?.id) return;
+
+    if (event.over?.id) {
+      const overElem = currentPage.actions.find(
+        (action) => action.id === event.over?.id
+      );
+      setOverItem(overElem ?? null);
+    }
+  }
+
+  function handleDragMove(event: DragMoveEvent) {
+    if (!event.over?.id) {
+      setOverItem(null);
+    }
   }
 
   return (
     <>
       <Title text={`Процесс - ${name}`} />
+      <div className="w-full mb-3 flex justify-end items-center">
+        <div className="flex items-center gap-3.5">
+          <Button variant={'outline'}>Сохранить</Button>
+          {currentPage.isPublished ? (
+            <Badge>Опубликовано</Badge>
+          ) : (
+            <Button>Опубликовать</Button>
+          )}
+        </div>
+      </div>
       <div className="flex flex-row items-stretch justify-start gap-5">
         <div className="min-w-[235px]">
           <div>
@@ -75,7 +128,7 @@ const Process = () => {
                 <Button
                   className="w-[50%]"
                   variant={'outline'}
-                  onClick={handleRemovePage}
+                  onClick={() => removePage(currentPage.id)}
                 >
                   Удалить
                 </Button>
@@ -89,14 +142,18 @@ const Process = () => {
             {actions.map((action) => {
               return (
                 <li
+                  role="button"
+                  onClick={() =>
+                    updatePageActions({ ...action, id: Date.now() })
+                  }
                   key={action.code}
                   className={cn(
-                    'flex items-center justify-between list-none w-full p-2.5 bg-[#fff] rounded-[8px]'
+                    'flex cursor-pointer items-center justify-between list-none w-full p-2.5 bg-[#fff] rounded-[8px] hover:scale-[1.02]'
                   )}
                 >
-                  <span>{action.label}</span>
-                  <div className="cursor-move">
-                    <GripVertical />
+                  <div className="flex justify-center items-center flex-row gap-3.5">
+                    {actionIcon[action.code] ?? <Info />}
+                    <span>{action.label}</span>
                   </div>
                 </li>
               );
@@ -108,7 +165,34 @@ const Process = () => {
             <Title2 text="Элементы страницы" />
             <Label className="text-neutral-500 mb-4">{currentPage.name}</Label>
           </div>
-          <div className="w-full border-2 rounded-[8px] border-dashed border-neutral-400 flex-1"></div>
+          <div className="w-full border-2 rounded-[8px] border-dashed border-neutral-300 flex-1">
+            <div className="flex flex-col gap-3.5 p-3">
+              <DNDContextWrapper
+                draggedItem={draggedItem}
+                onDragStart={handleDragStart}
+                onDragEnd={handleDragEnd}
+                onDragOver={handleDragOver}
+                onDragMove={handleDragMove}
+              >
+                {currentPage.actions.map((action, idx) => {
+                  return overItem && draggedItem?.id === action.id ? (
+                    <ElementCard
+                      isStatic
+                      key={action.id}
+                      action={overItem}
+                      position={idx + 1}
+                    />
+                  ) : (
+                    <Draggable
+                      key={action.code + idx}
+                      action={action}
+                      position={idx + 1}
+                    />
+                  );
+                })}
+              </DNDContextWrapper>
+            </div>
+          </div>
         </div>
       </div>
     </>

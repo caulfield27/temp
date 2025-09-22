@@ -9,7 +9,7 @@ const Layout = () => {
   return (
     <div>
       <Header />
-      <div className="max-w-[var(--container_mw)] pt-8 m-auto">
+      <div className="max-w-[var(--container_mw)] py-8 m-auto">
         <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>

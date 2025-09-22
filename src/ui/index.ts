@@ -1,7 +1,16 @@
 import { Avatar, AvatarFallback, AvatarImage } from './avatar/Avatar';
 import { Badge } from './badge/Badge';
 import { Button } from './button/Button';
-import { Card } from './card/Card';
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from './card/Card';
+import { Checkbox } from './checkbox/Checkbox';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,6 +34,16 @@ import { Loader } from './loader/Loader';
 import { NavigationMenu } from './navigation-menu/Navigation-menu';
 import { Separator } from './separator/Separator';
 import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from './sheet/Sheet';
+import {
   Table,
   TableBody,
   TableCell,
@@ -43,6 +62,13 @@ export {
   Badge,
   Button,
   Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  Checkbox,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -61,6 +87,14 @@ export {
   Loader,
   NavigationMenu,
   Separator,
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
   Table,
   TableBody,
   TableCell,

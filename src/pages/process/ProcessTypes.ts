@@ -1,5 +1,7 @@
-export interface IPage {
-  name: string;
-  actions: string[];
-  id: number;
+export interface IAction {
+  label: string;
+  description: string;
+  code: string;
+  required: boolean;
+  id?: number;
 }

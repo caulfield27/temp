@@ -1,14 +1,13 @@
 import { createBrowserRouter } from 'react-router';
 
+import { Layout } from '@/app/layout';
 import {
   LazyApplications,
   LazyHomePage,
   LazyLogin,
   LazyOrganization,
   LazyProcess,
-} from '@/app/lazy/lazy';
-
-import Layout from '../../layout/Layout';
+} from '@/app/lazy';
 
 export const routes = createBrowserRouter([
   {
