@@ -1,6 +1,8 @@
 import { GripVertical, Pencil, Trash } from 'lucide-react';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
+import { toasterOptions } from '@/constants';
 import { useProcessStore } from '@/store';
 import {
   Badge,
@@ -61,7 +63,7 @@ export const ElementCard = (props: IComponentProps) => {
                   <SheetTitle>Редактировать элемент</SheetTitle>
                 </SheetHeader>
                 <div className="grid flex-1 auto-rows-min gap-6 px-4">
-                  <div className="grid gap-3">
+                  {/* <div className="grid gap-3">
                     <Label htmlFor="key">Ключ</Label>
                     <Input
                       id="key"
@@ -73,7 +75,7 @@ export const ElementCard = (props: IComponentProps) => {
                         }))
                       }
                     />
-                  </div>
+                  </div> */}
                   <div className="grid gap-3">
                     <Label htmlFor="desc">Заголовок</Label>
                     <Input
@@ -107,10 +109,19 @@ export const ElementCard = (props: IComponentProps) => {
                     <Button
                       type="submit"
                       onClick={() =>
-                        updateAction(action.id ?? -1, {
-                          ...action,
-                          ...changableValues,
-                        })
+                        updateAction(
+                          action.id ?? -1,
+                          {
+                            ...action,
+                            ...changableValues,
+                          },
+                          () => {
+                            toast.success(
+                              'Данные успешно обновлены',
+                              toasterOptions['success']
+                            );
+                          }
+                        )
                       }
                     >
                       Применить

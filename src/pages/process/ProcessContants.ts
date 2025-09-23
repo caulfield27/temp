@@ -20,12 +20,6 @@ export const actions: IAction[] = [
     required: true,
   },
   {
-    label: 'Face Match',
-    description: 'Сравнения лица',
-    code: 'visionlabs_face_match',
-    required: true,
-  },
-  {
     label: 'Regula Back',
     description: 'Паспорт (оборот)',
     code: 'regula_ocr_back',
@@ -47,18 +41,6 @@ export const actions: IAction[] = [
     label: 'Инфо: Дата',
     description: 'Дата',
     code: 'info_date',
-    required: true,
-  },
-  {
-    label: 'Инфо: Список',
-    description: 'Список',
-    code: 'info_list',
-    required: true,
-  },
-  {
-    label: 'Чекбокс',
-    description: 'Чекбокс',
-    code: 'info_checkbox',
     required: true,
   },
   {

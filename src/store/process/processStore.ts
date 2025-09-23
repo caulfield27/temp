@@ -2,127 +2,194 @@ import { create } from 'zustand';
 
 import type { IAction } from '@/pages/process/ProcessTypes';
 
-import type { IPage } from './processStoreTypes';
+import type { IPage, IProcess } from './processStoreTypes';
 
 interface IStates {
-  pages: IPage[];
-  currentPage: IPage;
+  processes: IProcess[];
+  currentProcess: IProcess | null;
+  currentPage: IPage | null;
 }
 
 type Actions = {
   setPages: (newPage: IPage) => void;
+  updateCurrentProcess: (process: IProcess, successCb?: () => void) => void;
+  updateProcesses: (id: number, successCb?: () => void) => void;
+  addProccess: (newProcess: IProcess) => void;
+  setCurrentProcess: (process: IProcess) => void;
   setCurrentPage: (page: IPage) => void;
   removePage: (id: number) => void;
-  updatePageActions: (newAction: IAction) => void;
-  swapActions: (firstIdx: number, secondIdx: number) => void;
+  addAction: (newAction: IAction) => void;
+  swapActions: (firstId: number, secondId: number) => void;
   removeAction: (id: number) => void;
-  updateAction: (id: number, newAction: IAction) => void;
-};
-
-const defaultPage: IPage = {
-  name: 'Шаг 1',
-  actions: [],
-  id: Date.now(),
-  isPublished: false,
+  updateAction: (
+    id: number,
+    newAction: IAction,
+    successCb?: () => void
+  ) => void;
+  updatePageName: (name: string) => void;
 };
 
 const initialStates: IStates = {
-  pages: [defaultPage],
-  currentPage: defaultPage,
+  processes: [],
+  currentProcess: null,
+  currentPage: null,
 };
 
 export const useProcessStore = create<IStates & Actions>((set, get) => ({
   ...initialStates,
-  setPages: (newPage) => set((state) => ({ pages: [...state.pages, newPage] })),
-  setCurrentPage: (page) => set({ currentPage: page }),
-  removePage: (id) => {
-    const { pages } = get();
-    const updatedPages = pages.filter((page) => page.id !== id);
-    set({ pages: updatedPages, currentPage: updatedPages[0] });
+  updatePageName: (value) => {
+    const { currentPage, currentProcess } = get();
+    if (currentPage && currentProcess) {
+      const updatedPage = { ...currentPage, name: value };
+      const updatedProcess = {
+        ...currentProcess,
+        pages: currentProcess.pages.map((page) =>
+          page.id === currentPage.id ? updatedPage : page
+        ),
+      };
+      set({
+        currentPage: updatedPage,
+        currentProcess: updatedProcess,
+      });
+    }
   },
-  updatePageActions: (action) => {
-    const { currentPage, pages } = get();
-    const updatedPage = {
-      ...currentPage,
-      actions: [...currentPage.actions, action],
-    };
-    const updatedPages = pages.map((page) => {
-      if (page.id === currentPage.id) return updatedPage;
-      return page;
-    });
+  setPages: (newPage) => {
+    const { currentProcess } = get();
+    if (currentProcess) {
+      const updatedProcess = {
+        ...currentProcess,
+        pages: [...currentProcess.pages, newPage],
+      };
+      set({ currentProcess: updatedProcess });
+    }
+  },
+  updateProcesses: (id, cb) => {
+    const { currentProcess, processes } = get();
+    const updatedProcesses = processes.map((process) =>
+      process.id === id ? (currentProcess ?? process) : process
+    );
 
-    set({
-      currentPage: updatedPage,
-      pages: updatedPages,
-    });
+    cb && cb();
+    set({ processes: updatedProcesses });
+  },
+  updateCurrentProcess: (process, cb) => {
+    cb && cb();
+    set({ currentProcess: process });
+  },
+  addProccess: (process) =>
+    set((state) => ({ processes: [...state.processes, process] })),
+  setCurrentPage: (page) => set({ currentPage: page }),
+  setCurrentProcess: (process) => set({ currentProcess: process }),
+  removePage: (id) => {
+    const { currentProcess } = get();
+    if (currentProcess) {
+      const updatedProcess = {
+        ...currentProcess,
+        pages: currentProcess.pages.filter((page) => page.id !== id),
+      };
+      set({
+        currentProcess: updatedProcess,
+        currentPage: updatedProcess.pages[updatedProcess.pages.length - 1],
+      });
+    }
+  },
+  addAction: (action) => {
+    const { currentPage, currentProcess } = get();
+    if (currentPage && currentProcess) {
+      const updatedPage = {
+        ...currentPage,
+        actions: [...currentPage.actions, action],
+      };
+      const updatedProcess = {
+        ...currentProcess,
+        pages: currentProcess.pages.map((page) => {
+          if (page.id === currentPage.id) return updatedPage;
+          return page;
+        }),
+      };
+      set({
+        currentPage: updatedPage,
+        currentProcess: updatedProcess,
+      });
+    }
   },
   swapActions: (firstId, secondId) => {
-    const { currentPage, pages } = get();
-    let firstIdx = null,
-      secondIdx = null;
-    const currentActions = [...currentPage.actions];
+    const { currentPage, currentProcess } = get();
+    if (currentPage && currentProcess) {
+      let firstIdx = null,
+        secondIdx = null;
+      const currentActions = [...currentPage.actions];
 
-    for (let i = 0; i < currentActions.length; i++) {
-      const action = currentActions[i];
-      if (action.id === firstId || action.id === secondId) {
-        if (firstIdx !== null) {
-          secondIdx = i;
-        } else {
-          firstIdx = i;
+      for (let i = 0; i < currentActions.length; i++) {
+        const action = currentActions[i];
+        if (action.id === firstId || action.id === secondId) {
+          if (firstIdx !== null) {
+            secondIdx = i;
+          } else {
+            firstIdx = i;
+          }
+          if (firstIdx && secondIdx) break;
         }
-        if (firstIdx && secondIdx) break;
       }
-    }
 
-    if (firstIdx !== null && secondIdx !== null) {
-      [currentActions[firstIdx], currentActions[secondIdx]] = [
-        currentActions[secondIdx],
-        currentActions[firstIdx],
-      ];
-      const updatedPages = pages.map((page) => {
-        if (page.id === currentPage.id)
-          return { ...page, actions: currentActions };
-        return page;
-      });
-      set({
-        currentPage: { ...currentPage, actions: currentActions },
-        pages: updatedPages,
-      });
+      if (firstIdx !== null && secondIdx !== null) {
+        [currentActions[firstIdx], currentActions[secondIdx]] = [
+          currentActions[secondIdx],
+          currentActions[firstIdx],
+        ];
+        const updatedProcess = {
+          ...currentProcess,
+          pages: currentProcess?.pages.map((page) => {
+            if (page.id === currentPage.id)
+              return { ...page, actions: currentActions };
+            return page;
+          }),
+        };
+        set({
+          currentPage: { ...currentPage, actions: currentActions },
+          currentProcess: updatedProcess,
+        });
+      }
     }
   },
   removeAction: (id) => {
-    const { currentPage, pages } = get();
-    const filteredActions = currentPage.actions.filter(
-      (action) => action.id !== id
-    );
-
-    const updatedPage = { ...currentPage, actions: filteredActions };
-    const updatedPages = pages.map((page) => {
-      if (page.id === currentPage.id) return updatedPage;
-      return page;
-    });
-
-    set({
-      currentPage: updatedPage,
-      pages: updatedPages,
-    });
+    const { currentPage, currentProcess } = get();
+    if (currentPage && currentProcess) {
+      const filteredActions = currentPage.actions.filter(
+        (action) => action.id !== id
+      );
+      const updatedPage = { ...currentPage, actions: filteredActions };
+      const updatedProcess = {
+        ...currentProcess,
+        pages: currentProcess.pages.map((page) =>
+          page.id === currentPage.id ? updatedPage : page
+        ),
+      };
+      set({
+        currentPage: updatedPage,
+        currentProcess: updatedProcess,
+      });
+    }
   },
-  updateAction: (id, newAction) => {
-    const { currentPage, pages } = get();
-    const updatedActions = currentPage.actions.map((action) => {
-      if (action.id === id) return newAction;
-      return action;
-    });
+  updateAction: (id, newAction, cb) => {
+    const { currentPage, currentProcess } = get();
+    if (currentPage && currentProcess) {
+      const updatedActions = currentPage.actions.map((action) =>
+        action.id === id ? newAction : action
+      );
+      const updatedPage = { ...currentPage, actions: updatedActions };
+      const updatedProcess = {
+        ...currentProcess,
+        pages: currentProcess.pages.map((page) =>
+          page.id === currentPage.id ? updatedPage : page
+        ),
+      };
 
-    const updatedPage = { ...currentPage, actions: updatedActions };
-    const updatedPages = pages.map((page) => {
-      if (page.id === currentPage.id) return updatedPage;
-      return page;
-    });
-
-    set({
-      currentPage: updatedPage,
-      pages: updatedPages,
-    });
+      cb && cb();
+      set({
+        currentPage: updatedPage,
+        currentProcess: updatedProcess,
+      });
+    }
   },
 }));

@@ -63,7 +63,11 @@ export const Header = () => {
                 <NavLink to="org">Организация</NavLink>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem role="button">
+              <DropdownMenuItem
+                role="button"
+                className="cursor-pointer"
+                onClick={() => navigate('login')}
+              >
                 Выйти
                 <DropdownMenuShortcut>
                   <LogOut />

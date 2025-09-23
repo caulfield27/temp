@@ -1,10 +1,12 @@
-import { BadgeCheckIcon } from 'lucide-react';
+import { BadgeCheckIcon, Eye } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
-import { processes } from '@/data';
 import { cn } from '@/lib/utils';
+import { useProcessStore } from '@/store';
 import {
   Badge,
+  BadgeCopy,
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -19,6 +21,7 @@ import { CreateProcess } from './_components';
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const processes = useProcessStore((state) => state.processes);
   return (
     <div>
       <Title text="Кабинет" />
@@ -36,16 +39,11 @@ const HomePage = () => {
           </TableHeader>
           <TableBody>
             {processes.length ? (
-              processes.map((row, i) => (
-                <TableRow
-                  role="button"
-                  onClick={() => navigate(`process/${row.name}`)}
-                  className="cursor-pointer"
-                  key={i}
-                >
+              processes.map((row) => (
+                <TableRow key={row.id}>
                   <TableCell>{row.name}</TableCell>
                   <TableCell>
-                    {row.link ? window.origin + row.link : ''}
+                    {row.link ? <BadgeCopy content={row.link} /> : ''}
                   </TableCell>
                   <TableCell>
                     {row.createdAt.toLocaleDateString() +
@@ -56,12 +54,21 @@ const HomePage = () => {
                     <Badge
                       className={cn(
                         'bg-neutral-700',
-                        row.status === 'published' && 'bg-green-600'
+                        row.isPublished && 'bg-green-600'
                       )}
                     >
-                      {row.status === 'published' && <BadgeCheckIcon />}
-                      {row.status === 'published' ? 'опубликовано' : 'черновик'}
+                      {row.isPublished && <BadgeCheckIcon />}
+                      {row.isPublished ? 'опубликовано' : 'черновик'}
                     </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      onClick={() => navigate(`process/${row.id}`)}
+                      size={'icon'}
+                      variant={'outline'}
+                    >
+                      <Eye />
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))

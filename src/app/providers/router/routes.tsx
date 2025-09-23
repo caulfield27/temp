@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router';
 import { Layout } from '@/app/layout';
 import {
   LazyApplications,
+  LazyFlow,
   LazyHomePage,
   LazyLogin,
   LazyOrganization,
@@ -27,13 +28,17 @@ export const routes = createBrowserRouter([
         element: <LazyOrganization />,
       },
       {
-        path: 'process/:name',
+        path: 'process/:id',
         element: <LazyProcess />,
       },
     ],
   },
   {
-    path: '/login',
+    path: 'login',
     element: <LazyLogin />,
+  },
+  {
+    path: 'flow/:id',
+    element: <LazyFlow />,
   },
 ]);
