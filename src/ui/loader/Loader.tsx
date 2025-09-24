@@ -24,7 +24,7 @@ export const Loader = () => {
   const spinnerStyle: React.CSSProperties = {
     width: '64px',
     height: '64px',
-    border: '4px solid var(--prinary)',
+    border: '4px solid #f87102',
     borderTop: '4px solid transparent',
     borderRadius: '50%',
     animation: 'spin 1s linear infinite',

@@ -1,11 +1,14 @@
 import { useEffect, useRef } from 'react';
 
+import { useFlowStore } from '../../FlowStore';
+import styles from './FaceScan.module.css';
 import { useFaceScanStore } from './FaceScanStore';
 import { setupCanvas } from './FaceScanUtils';
 
 export const FaceScan = () => {
   // ZUSTAND STORE STATES
   const { init, instruction, loadingText } = useFaceScanStore();
+  const { setData, setLivenessOpen } = useFlowStore();
 
   // DOM REFS
   const visionRef = useRef<HTMLDivElement | null>(null);
@@ -13,6 +16,7 @@ export const FaceScan = () => {
   const canvasSemicirclesRef = useRef<HTMLCanvasElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
+  // EFFECT HANDLERS
   useEffect(() => {
     const vision = visionRef.current;
     const canvasSemicircles = canvasSemicirclesRef.current;
@@ -31,40 +35,36 @@ export const FaceScan = () => {
     if (canvas && videoContainer) {
       setupCanvas(canvas, videoContainer);
     }
+
+    const timerId = setTimeout(() => {
+      setLivenessOpen(false);
+      setData('visionlabs_liveness', 85);
+    }, 4000);
+
+    return () => {
+      clearTimeout(timerId);
+    };
   }, []);
 
   return (
-    <div className="w-full h-full relative flex flex-col items-center justify-center mb-0 z-[1]">
+    <div className={styles.vision_wrapper}>
       <div
         ref={videoContainerRef}
+        className={styles.video_container}
         id="videoContainer"
-        className="relative w-[480px] h-[640px] flex items-center max-[600px]:w-full max-[600px]:h-full"
       >
         <canvas
           ref={canvasSemicirclesRef}
+          className={styles.semicircles}
           id="semicircles"
-          className="absolute z-[3] transition-[stroke] duration-2000 ease-in-out"
-        />
-        <canvas
-          ref={canvasRef}
-          id="canvas"
-          className="absolute z-[1] w-full h-full"
-        />
-        <div ref={visionRef} id="vision" className="w-full h-full z-[2]" />
-        <div
-          id="info-block"
-          className="absolute top-[90%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full z-[100] flex flex-col gap-2 mt-2"
-        >
-          <div
-            id="inctructions"
-            className="text-2xl leading-8 text-center z-[2] font-bold"
-          >
+        ></canvas>
+        <canvas ref={canvasRef} className={styles.canvas} id="canvas"></canvas>
+        <div ref={visionRef} className={styles.vision} id="vision"></div>
+        <div className={styles.info_block} id="info-block">
+          <div className={styles.instructions} id="inctructions">
             {instruction}
           </div>
-          <div
-            id="loading-text"
-            className="text-center z-[2] text-[var(--text-secondary-color)]"
-          >
+          <div className={styles.loading_text} id="loading-text">
             {loadingText}
           </div>
         </div>

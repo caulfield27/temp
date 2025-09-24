@@ -118,8 +118,6 @@ const Process = () => {
     }
   }
 
-  console.log(currentPage);
-
   return (
     <>
       <Title text={`Процесс - ${currentProcess?.name}`} />

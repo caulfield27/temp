@@ -1,5 +1,5 @@
 import { ChevronDownIcon } from 'lucide-react';
-import { type ReactNode, useState } from 'react';
+import { useState } from 'react';
 
 import type { IAction } from '@/pages/process/ProcessTypes';
 import {
@@ -13,12 +13,6 @@ import {
 } from '@/ui';
 
 import { useFlowStore } from '../../FlowStore';
-
-const Container = ({ children }: { children: ReactNode }) => {
-  return (
-    <div className="grid w-full max-w-sm items-center gap-3">{children}</div>
-  );
-};
 
 export const DynamicField = ({ data }: { data: IAction }) => {
   const { code, description, required } = data;
@@ -35,7 +29,7 @@ export const DynamicField = ({ data }: { data: IAction }) => {
   switch (code) {
     case 'info_date':
       return (
-        <div className="flex flex-col gap-3">
+        <div className="w-full flex flex-col gap-3">
           <Label htmlFor="date" className="px-1">
             Дата
           </Label>
@@ -71,15 +65,20 @@ export const DynamicField = ({ data }: { data: IAction }) => {
       );
     default:
       return (
-        <Container>
+        <div className="grid w-full items-center gap-3">
           <Label
             htmlFor={code}
             className={`${required ? 'after:content-["*"] after:text-[#ff0000]' : ''}`}
           >
             {description}
           </Label>
-          <Input type={type} id={code} placeholder={description} />
-        </Container>
+          <Input
+            className="w-full bg-[#fff]"
+            type={type}
+            id={code}
+            placeholder={description}
+          />
+        </div>
       );
   }
 };

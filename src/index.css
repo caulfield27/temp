@@ -153,3 +153,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+body {
+  box-sizing: border-box;
+  overflow-x: hidden;
+}

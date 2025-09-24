@@ -1,6 +1,14 @@
-import { RouterProvider } from "react-router";
-import { routes } from "./routes";
+import { RouterProvider } from 'react-router';
 
-export const AppProvider  = () => {
-    return <RouterProvider router={routes}/>;
+import { Toaster } from '@/ui';
+
+import { routes } from './routes';
+
+export const AppProvider = () => {
+  return (
+    <>
+      <RouterProvider router={routes} />;
+      <Toaster />
+    </>
+  );
 };

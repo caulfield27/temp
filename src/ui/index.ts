@@ -41,6 +41,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from './popover/Popover';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectScrollDownButton,
+  SelectScrollUpButton,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from './select/Select';
 import { Separator } from './separator/Separator';
 import {
   Sheet,
@@ -105,6 +117,16 @@ export {
   PopoverAnchor,
   PopoverContent,
   PopoverTrigger,
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectScrollDownButton,
+  SelectScrollUpButton,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
   Separator,
   Sheet,
   SheetClose,

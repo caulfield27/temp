@@ -97,6 +97,7 @@ interface IStates {
   data: { [key: string]: unknown };
   isLivenessOpen: boolean;
   isDocReaderOpen: boolean;
+  passportType: 'front' | 'back';
 }
 
 type Actions = {
@@ -104,9 +105,11 @@ type Actions = {
   setData: (key: string, value: unknown) => void;
   setLivenessOpen: (payload: boolean) => void;
   setDocReaderOpen: (payload: boolean) => void;
+  setPassportType: (type: 'front' | 'back') => void;
 };
 
 const initialStates: IStates = {
+  passportType: 'front',
   process: currentProcess,
   step: 1,
   data: {},
@@ -116,6 +119,7 @@ const initialStates: IStates = {
 
 export const useFlowStore = create<IStates & Actions>((set) => ({
   ...initialStates,
+  setPassportType: (type) => set({ passportType: type }),
   setLivenessOpen: (payload) => set({ isLivenessOpen: payload }),
   setDocReaderOpen: (payload) => set({ isDocReaderOpen: payload }),
   setStep: (step) => set({ step: step }),

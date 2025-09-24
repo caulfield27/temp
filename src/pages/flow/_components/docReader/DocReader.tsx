@@ -4,12 +4,15 @@ import {
   DocumentReaderService,
   type DocumentReaderWebComponent,
   EventActions,
+  GraphicFieldType,
   InternalScenarios,
   type TransactionEvent,
 } from '@regulaforensics/vp-frontend-document-components';
 import { type CSSProperties, useEffect, useRef, useState } from 'react';
 
 import { Loader } from '@/ui';
+
+import { useFlowStore } from '../../FlowStore';
 
 const containerStyle: CSSProperties = {
   display: 'flex',
@@ -26,6 +29,7 @@ export function Passport() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const docReaderRef = useRef<DocumentReaderWebComponent>(null);
   const [loading, setLoading] = useState(true);
+  const { setData, setDocReaderOpen, passportType } = useFlowStore();
 
   const listener = (
     data: CustomEvent<DocumentReaderDetailType | TransactionEvent>
@@ -53,12 +57,19 @@ export function Passport() {
 
       if (!isFinishStatus || !data.detail.data?.response) return;
       if (isFinishStatus || data.detail.data.response) {
+        const value = data?.detail?.data?.response?.images?.getField(
+          GraphicFieldType.DOCUMENT_FRONT
+        )?.valueList[1].value;
+        if (value) {
+          setData(`regula_ocr_${passportType}`, value);
+        }
+        setDocReaderOpen(false);
         //todo
       }
     }
 
     if (data.detail?.action === EventActions.CLOSE) {
-      //   setIsDocReaderOpen(false);
+      setDocReaderOpen(false);
     }
   };
 

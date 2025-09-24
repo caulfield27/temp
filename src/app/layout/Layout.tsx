@@ -1,7 +1,6 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router';
 
-import { Toaster } from '@/ui';
 import { Loader } from '@/ui/loader/Loader';
 
 import { Header } from './_components';
@@ -17,7 +16,6 @@ const Layout = () => {
           </Suspense>
         </div>
       </div>
-      <Toaster />
     </>
   );
 };

@@ -125,7 +125,7 @@ export const useFaceScanStore = create<IStates & Actions>((set, get) => ({
 
     set({
       canvasSemicircles: canvasSemicircles,
-      loadingText: 'validation.cameraNotConnected',
+      loadingText: 'Камера не подключеана',
       faceRecognition: faceR,
     });
     await faceR.attachCamera();
