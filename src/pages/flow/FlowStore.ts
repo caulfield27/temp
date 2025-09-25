@@ -69,18 +69,6 @@ const currentProcess: IProcess = {
           required: true,
         },
         {
-          label: 'Инфо: Список',
-          description: 'Список',
-          code: 'info_list',
-          required: true,
-        },
-        {
-          label: 'Чекбокс',
-          description: 'Чекбокс',
-          code: 'info_checkbox',
-          required: true,
-        },
-        {
           label: 'Загрузка файла',
           description: 'Загрузка файла',
           code: 'file_upload',

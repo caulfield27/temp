@@ -30,6 +30,7 @@ export const Header = () => {
           <nav className="flex flex-row gap-5.5 justify-center items-center">
             {headerLinls.map((link) => (
               <NavLink
+                key={link.path}
                 className={({ isActive }) =>
                   cn(
                     'font-[18px] px-3 py-1.5 text-neutral-950 cursor-pointer rounded-md hover:bg-[var(--primary)] hover:text-[var(--primary-foreground)]',

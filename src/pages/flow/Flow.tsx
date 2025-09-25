@@ -24,7 +24,7 @@ const Flow = () => {
       </div>
       <ProcessStep />
       <div className="w-full flex justify-end mt-5">
-        {step === process.pages.length - 1 ? (
+        {step === process.pages.length ? (
           <Button
             onClick={() => {
               console.log(data);

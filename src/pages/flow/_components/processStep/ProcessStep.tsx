@@ -27,7 +27,7 @@ export const ProcessStep = () => {
       {actions.map((action) => {
         return (
           <div className="w-full" key={action.code}>
-            {component[action.code](action)}
+            {!!component[action.code] && component[action.code](action)}
           </div>
         );
       })}
